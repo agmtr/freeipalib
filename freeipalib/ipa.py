@@ -23,24 +23,27 @@ class Ipa(object):
         }
         payload = {'user': username, 'password': password}
         r = self._session.post(ipa_url, headers=headers, data=payload, verify=self._ssl_verify)
-
+        
         if r.status_code != 200:
-            logger.warning('Login failed for user {0} in {1}'.format(username, self._server))
+            logger.warning('Login failed for user {0} on {1}'.format(username, self._server))
         else:
-            logger.info('Successfully logged in as {0}'.format(username))
+            logger.info('Successfully logged in as {0} on {1}'.format(username, self.server))
         return r
 
     def make_req(self, method: str, *args, **opts) -> dict:
         ipa_url = 'https://{0}/ipa'.format(self._server)
         session_url = '{0}/session/json'.format(ipa_url)
-        headers = {'Referer': ipa_url, 'Content-Type': 'application/json', 'Accept': 'application/json'}
+        headers = {
+            'Referer': ipa_url,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
         payload = {'method': method, 'params': [args, opts]}
-
+        
         logger.debug('Making {0} request to {1}'.format(payload, session_url))
-
+        
         request = self._session.post(session_url, headers=headers, data=json.dumps(payload), verify=self._ssl_verify)
         result = request.json()
-
         return result if result['error'] else result['result']
 
     def config_show(self):
