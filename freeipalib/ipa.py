@@ -27,7 +27,7 @@ class Ipa(object):
         if r.status_code != 200:
             logger.warning('Login failed for user {0} on {1}'.format(username, self._server))
         else:
-            logger.info('Successfully logged in as {0} on {1}'.format(username, self.server))
+            logger.info('Successfully logged in as {0} on {1}'.format(username, self._server))
         return r
 
     def make_req(self, method: str, *args, **kwargs) -> dict:
