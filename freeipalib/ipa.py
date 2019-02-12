@@ -80,7 +80,7 @@ class Ipa(object):
         return self.make_req('group_add_member', gid, **kwargs)
 
     def group_remove_member(self, gid, **kwargs):
-        return self.make_req('group_remove_member', **kwargs)
+        return self.make_req('group_remove_member', gid, **kwargs)
 
     def group_show(self, gid):
         return self.make_req('group_show', gid)
