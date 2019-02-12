@@ -30,7 +30,7 @@ class Ipa(object):
             logger.info('Successfully logged in as {0} on {1}'.format(username, self.server))
         return r
 
-    def make_req(self, method: str, *args, **opts) -> dict:
+    def make_req(self, method: str, *args, **kwargs) -> dict:
         ipa_url = 'https://{0}/ipa'.format(self._server)
         session_url = '{0}/session/json'.format(ipa_url)
         headers = {
@@ -38,7 +38,7 @@ class Ipa(object):
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         }
-        payload = {'method': method, 'params': [args, opts]}
+        payload = {'method': method, 'params': [args, kwargs]}
         
         logger.debug('Making {0} request to {1}'.format(payload, session_url))
         
@@ -49,8 +49,8 @@ class Ipa(object):
     def config_show(self):
         return self.make_req('config_show')
 
-    def user_add(self, firstname, lastname, uid, **opts):
-        return self.make_req('user_add', uid, givenname=firstname, sn=lastname, **opts)
+    def user_add(self, firstname, lastname, uid, **kwargs):
+        return self.make_req('user_add', uid, givenname=firstname, sn=lastname, **kwargs)
 
     def user_del(self, uid):
         return self.make_req('user_del', uid)
@@ -64,29 +64,29 @@ class Ipa(object):
     def user_show(self, uid):
         return self.make_req('user_show', uid)
 
-    def user_mod(self, uid, **opts):
-        return self.make_req('user_mod', uid, **opts)
+    def user_mod(self, uid, **kwargs):
+        return self.make_req('user_mod', uid, **kwargs)
 
-    def user_find(self, criteria="", **opts):
-        return self.make_req('user_find', criteria, **opts)
+    def user_find(self, criteria="", **kwargs):
+        return self.make_req('user_find', criteria, **kwargs)
 
-    def group_add(self, gid, **opts):
-        return self.make_req('group_add', gid, **opts)
+    def group_add(self, gid, **kwargs):
+        return self.make_req('group_add', gid, **kwargs)
 
     def group_del(self, gid):
         return self.make_req('group_del', gid)
 
-    def group_add_member(self, gid, **opts):
-        return self.make_req('group_add_member', gid, **opts)
+    def group_add_member(self, gid, **kwargs):
+        return self.make_req('group_add_member', gid, **kwargs)
 
-    def group_remove_member(self, gid, **opts):
-        return self.make_req('group_remove_member', **opts)
+    def group_remove_member(self, gid, **kwargs):
+        return self.make_req('group_remove_member', **kwargs)
 
     def group_show(self, gid):
         return self.make_req('group_show', gid)
 
-    def group_mod(self, gid, **opts):
-        return self.make_req('group_mod', gid, **opts)
+    def group_mod(self, gid, **kwargs):
+        return self.make_req('group_mod', gid, **kwargs)
 
-    def group_find(self, criteria="", **opts):
-        return self.make_req('group_find', criteria, **opts)
+    def group_find(self, criteria="", **kwargs):
+        return self.make_req('group_find', criteria, **kwargs)
